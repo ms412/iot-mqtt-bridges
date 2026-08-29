@@ -38,7 +38,9 @@ def test_map_to_topics_single_topic(mocker):
     store = {'1.8.0': {'data_value': 1, 'data_unit': 'Wh', 'data_type': None}}
     topics = bridge.map_to_topics(store)
     assert topics[0][0] == 'HOME/SML'
-    assert json.loads(topics[0][1]) == store
+    decoded = json.loads(topics[0][1])
+    assert isinstance(decoded.pop('timestamp'), int)
+    assert decoded == store
 
 
 def test_publish_data_calls_mqtt(mocker):

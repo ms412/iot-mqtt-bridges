@@ -28,7 +28,9 @@ def test_map_to_topics_uses_publish_base(mocker):
     bridge = _bridge_with_mocks(mocker)
     topics = bridge.map_to_topics({16: {'WATER': 949.503}})
     assert topics[0][0] == 'PLANT/MBUS/16'
-    assert json.loads(topics[0][1]) == {'WATER': 949.503}
+    decoded = json.loads(topics[0][1])
+    assert isinstance(decoded.pop('timestamp'), int)
+    assert decoded == {'WATER': 949.503}
 
 
 def test_publish_data_calls_mqtt(mocker):

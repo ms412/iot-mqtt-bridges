@@ -31,7 +31,9 @@ def test_map_to_topics_nested(mocker):
     data = {'SERIAL01': {'GAS01': {'S0': 2208.0, 'S0_raw': '5000'}}}
     topics = bridge.map_to_topics(data)
     assert topics[0][0] == 'HOME/S0/SERIAL01/GAS01'
-    assert json.loads(topics[0][1]) == {'S0': 2208.0, 'S0_raw': '5000'}
+    decoded = json.loads(topics[0][1])
+    assert isinstance(decoded.pop('timestamp'), int)
+    assert decoded == {'S0': 2208.0, 'S0_raw': '5000'}
 
 
 def test_publish_data_is_retained(mocker):

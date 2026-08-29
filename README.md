@@ -81,6 +81,9 @@ config files.
 - `sml2mqtt`: `<PUBLISH>` (single topic) → `{obis_short: {data_value, data_unit, data_type}}`
 - `so2mqtt`: `<PUBLISH>/<interface>/<channel>` → `{S0, S0_raw}` (retained)
 
+Every published payload also carries a top-level `timestamp` field (Unix epoch
+seconds) recording when the message was built.
+
 ## Installation
 
 Requires Python 3.12+.

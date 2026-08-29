@@ -2,6 +2,7 @@
 """Pure transformation helpers for mbus2mqtt."""
 
 import json
+import time
 
 
 def coerce_float(value: object) -> float | None:
@@ -65,7 +66,10 @@ def map_slave(slave_config: dict, raw_value: float) -> dict:
 
 
 def build_payload(slave_payload: dict) -> str:
-    """Serialize a slave payload dict to a JSON string.
+    """Serialize a slave payload dict to a JSON string with a timestamp.
+
+    A top-level ``timestamp`` key (Unix epoch seconds) is added to every
+    published payload.
 
     Args:
         slave_payload: Mapping of metric label to value.
@@ -73,7 +77,9 @@ def build_payload(slave_payload: dict) -> str:
     Returns:
         A JSON string suitable for publishing.
     """
-    return json.dumps(slave_payload)
+    payload = dict(slave_payload)
+    payload["timestamp"] = int(time.time())
+    return json.dumps(payload)
 
 
 def map_to_topics(data: dict, base_topic: str) -> list[tuple[str, str]]:

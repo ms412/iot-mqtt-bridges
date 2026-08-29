@@ -3,6 +3,7 @@
 
 import json
 import logging
+import time
 
 from smllib import SmlStreamReader
 from smllib.errors import SmlLibException
@@ -51,7 +52,10 @@ def parse_frame(frame_bytes: bytes) -> dict:
 
 
 def build_payload(store: dict) -> str:
-    """Serialize the parsed OBIS store to a JSON string.
+    """Serialize the parsed OBIS store to a JSON string with a timestamp.
+
+    A top-level ``timestamp`` key (Unix epoch seconds) is added to every
+    published payload.
 
     Args:
         store: Parsed OBIS store.
@@ -59,7 +63,9 @@ def build_payload(store: dict) -> str:
     Returns:
         A JSON string suitable for publishing.
     """
-    return json.dumps(store)
+    payload = dict(store)
+    payload["timestamp"] = int(time.time())
+    return json.dumps(payload)
 
 
 def map_to_topics(store: dict, base_topic: str) -> list[tuple[str, str]]:

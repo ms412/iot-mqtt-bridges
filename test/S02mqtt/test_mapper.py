@@ -49,4 +49,6 @@ def test_map_to_topics_nested_topic():
     assert len(topics) == 1
     topic, payload = topics[0]
     assert topic == 'HOME/S0/SERIAL01/GAS01'
-    assert json.loads(payload) == {'S0': 2208.0, 'S0_raw': '5000'}
+    decoded = json.loads(payload)
+    assert isinstance(decoded.pop('timestamp'), int)
+    assert decoded == {'S0': 2208.0, 'S0_raw': '5000'}

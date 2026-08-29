@@ -67,7 +67,9 @@ def test_map_to_topics_single_topic():
     topics = sml_mapper.map_to_topics(store, 'HOME/SML')
     assert len(topics) == 1
     assert topics[0][0] == 'HOME/SML'
-    assert json.loads(topics[0][1]) == store
+    decoded = json.loads(topics[0][1])
+    assert isinstance(decoded.pop('timestamp'), int)
+    assert decoded == store
 
 
 def test_map_to_topics_empty_store():

@@ -30,7 +30,9 @@ def test_map_to_topics_uses_publish_base(mocker):
     bridge = _bridge_with_mocks(mocker)
     topics = bridge.map_to_topics({9: {'VOLTAGE': {'VALUE': 230.0, 'UNIT': 'V'}}})
     assert topics[0][0] == 'PLANT/PV/9'
-    assert json.loads(topics[0][1]) == {'VOLTAGE': {'VALUE': 230.0, 'UNIT': 'V'}}
+    decoded = json.loads(topics[0][1])
+    assert isinstance(decoded.pop('timestamp'), int)
+    assert decoded == {'VOLTAGE': {'VALUE': 230.0, 'UNIT': 'V'}}
 
 
 def test_publish_data_calls_mqtt_publish(mocker):

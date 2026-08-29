@@ -3,6 +3,7 @@
 
 import json
 import logging
+import time
 
 __APP__ = "so2mqtt"
 
@@ -65,7 +66,10 @@ def process_interface(interface_config: dict, field_list: list[str]) -> dict:
 
 
 def build_payload(channel_payload: dict) -> str:
-    """Serialize a channel payload dict to a JSON string.
+    """Serialize a channel payload dict to a JSON string with a timestamp.
+
+    A top-level ``timestamp`` key (Unix epoch seconds) is added to every
+    published payload.
 
     Args:
         channel_payload: A ``{S0, S0_raw}`` dict.
@@ -73,7 +77,9 @@ def build_payload(channel_payload: dict) -> str:
     Returns:
         A JSON string suitable for publishing.
     """
-    return json.dumps(channel_payload)
+    payload = dict(channel_payload)
+    payload["timestamp"] = int(time.time())
+    return json.dumps(payload)
 
 
 def map_to_topics(data: dict, base_topic: str) -> list[tuple[str, str]]:

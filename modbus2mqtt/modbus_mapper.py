@@ -6,6 +6,7 @@ and turn them into MQTT (topic, payload) pairs. They perform no I/O.
 """
 
 import json
+import time
 
 
 def coerce_float(value: object) -> float | None:
@@ -112,7 +113,10 @@ def process_device(registers: list[dict], raw_values: dict) -> dict:
 
 
 def build_payload(device_payload: dict) -> str:
-    """Serialize a device payload dict to a JSON string.
+    """Serialize a device payload dict to a JSON string with a timestamp.
+
+    A top-level ``timestamp`` key (Unix epoch seconds) is added to every
+    published payload.
 
     Args:
         device_payload: Mapping of register name to ``{VALUE, UNIT}`` entries.
@@ -120,7 +124,9 @@ def build_payload(device_payload: dict) -> str:
     Returns:
         A JSON string suitable for publishing.
     """
-    return json.dumps(device_payload)
+    payload = dict(device_payload)
+    payload["timestamp"] = int(time.time())
+    return json.dumps(payload)
 
 
 def map_to_topics(data: dict, base_topic: str) -> list[tuple[str, str]]:

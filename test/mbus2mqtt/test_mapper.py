@@ -27,7 +27,9 @@ def test_map_to_topics_builds_per_slave_topic():
     assert len(topics) == 1
     topic, payload = topics[0]
     assert topic == 'PLANT/MBUS/16'
-    assert json.loads(payload) == {'WATER': 949.503}
+    decoded = json.loads(payload)
+    assert isinstance(decoded.pop('timestamp'), int)
+    assert decoded == {'WATER': 949.503}
 
 
 def test_map_to_topics_empty():

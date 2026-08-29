@@ -61,4 +61,26 @@ def test_map_to_topics_builds_topic_and_json():
     assert len(topics) == 1
     topic, payload = topics[0]
     assert topic == 'PLANT/PV/9'
-    assert json.loads(payload) == {'VOLTAGE': {'VALUE': 230.0, 'UNIT': 'V'}}
+    decoded = json.loads(payload)
+    assert isinstance(decoded.pop('timestamp'), int)
+    assert decoded == {'VOLTAGE': {'VALUE': 230.0, 'UNIT': 'V'}}
+
+
+def test_build_payload_includes_epoch_timestamp():
+    import time
+
+    before = int(time.time())
+    payload = json.loads(modbus_mapper.build_payload({'X': {'VALUE': 1, 'UNIT': 'V'}}))
+    after = int(time.time())
+
+    assert 'timestamp' in payload
+    assert isinstance(payload['timestamp'], int)
+    assert before <= payload['timestamp'] <= after
+    # Original data is preserved alongside the timestamp.
+    assert payload['X'] == {'VALUE': 1, 'UNIT': 'V'}
+
+
+def test_build_payload_does_not_mutate_input():
+    original = {'X': {'VALUE': 1, 'UNIT': 'V'}}
+    modbus_mapper.build_payload(original)
+    assert 'timestamp' not in original
