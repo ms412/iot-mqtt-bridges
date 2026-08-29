@@ -1,0 +1,15 @@
+
+#configobj==5.0.9
+#pymodbus==3.5.4
+pymodbus==3.5.4
+pyserial==3.5
+pyyaml > 6.0.0
+paho-mqtt==2.1.0
+pyMeterBus==0.8.4
+smllib==1.2
+
+# Test dependencies
+pytest>=8.0
+pytest-mock>=3.12
+
+

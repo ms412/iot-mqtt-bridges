@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Pre-commit hook: run the test suite and block the commit if it fails.
+#
+# Activate once per clone with:
+#   git config core.hooksPath .githooks
+#
+# Prefers the project virtualenv interpreter when present, otherwise falls back
+# to python3 / python on PATH.
+
+set -euo pipefail
+
+if [ -x ".venv/bin/python" ]; then
+    PYTHON=".venv/bin/python"
+elif [ -x ".venv/Scripts/python.exe" ]; then
+    PYTHON=".venv/Scripts/python.exe"
+elif command -v python3 >/dev/null 2>&1; then
+    PYTHON="python3"
+else
+    PYTHON="python"
+fi
+
+echo "pre-commit: running pytest with ${PYTHON}"
+if ! "${PYTHON}" -m pytest test/ -q; then
+    echo "pre-commit: tests failed, aborting commit." >&2
+    exit 1
+fi
+
+echo "pre-commit: tests passed."

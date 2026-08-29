@@ -1,0 +1,88 @@
+# =============================================================================
+# QDY30A Submersible Water Level Sensor - Modbus RTU Register Definition
+# Communication: RS-485, 9600 baud, 8N1 (default)
+# Protocol: Modbus RTU
+# Supported Function Codes: 0x03 (Read), 0x06 (Write Single Register)
+# =============================================================================
+
+1:
+  REGISTERS:
+    - Name: SLAVE_ADDRESS
+      Function Codes: "0x03, 0x06"
+      Start: 0
+      Size: 1
+      Data Type: uint16
+      Unit: ""
+      Scale Factor: 1
+      Access: R/W
+      Description: "Device Modbus address (1-255, default: 1)"
+
+    - Name: BAUD_RATE
+      Function Codes: "0x03, 0x06"
+      Start: 1
+      Size: 1
+      Data Type: uint16
+      Unit: ""
+      Scale Factor: 1
+      Access: R/W
+      Description: "Baud rate index (0=1200, 1=2400, 2=4800, 3=9600, 4=19200, 5=38400, 6=57600, 7=115200)"
+
+    - Name: UNIT_SELECTION
+      Function Codes: "0x03, 0x06"
+      Start: 2
+      Size: 1
+      Data Type: uint16
+      Unit: ""
+      Scale Factor: 1
+      Access: R/W
+      Description: "Measurement unit (16=meters, 17=centimeters)"
+
+    - Name: DECIMAL_POINTS
+      Function Codes: "0x03, 0x06"
+      Start: 3
+      Size: 1
+      Data Type: uint16
+      Unit: ""
+      Scale Factor: 1
+      Access: R/W
+      Description: "Number of decimal places (0-4). Actual value = RAW / 10^DECIMAL_POINTS"
+
+    - Name: WATER_LEVEL
+      Function Codes: "0x03"
+      Start: 4
+      Size: 1
+      Data Type: uint16
+      Unit: mm
+      Scale Factor: 0.1
+      Access: R
+      Description: "Raw measured water level value. Apply DECIMAL_POINTS for actual value."
+
+    - Name: ZERO_POINT
+      Function Codes: "0x03"
+      Start: 5
+      Size: 1
+      Data Type: uint16
+      Unit: mm
+      Scale Factor: 1
+      Access: R
+      Description: "Zero point calibration value"
+
+    - Name: FULL_SCALE
+      Function Codes: "0x03"
+      Start: 6
+      Size: 1
+      Data Type: uint16
+      Unit: mm
+      Scale Factor: 1
+      Access: R
+      Description: "Maximum measurable value (full scale range)"
+
+    - Name: SAVE_EEPROM
+      Function Codes: "0x06"
+      Start: 15
+      Size: 1
+      Data Type: uint16
+      Unit: ""
+      Scale Factor: 1
+      Access: W
+      Description: "Write 0 to save current configuration to EEPROM"

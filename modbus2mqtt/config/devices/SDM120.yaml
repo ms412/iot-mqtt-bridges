@@ -1,0 +1,64 @@
+   REGISTERS:
+      - Name: VOLTAGE
+        Function Codes: "0x04"
+        Start: 0
+        Size: 2
+        Data Type: float32
+        Unit: V
+        Scale Factor: 1
+
+      - Name: CURRENT
+        Function Codes: "0x04"
+        Start: 6
+        Size: 2
+        Data Type: float32
+        Unit: A
+        Scale Factor: 1
+
+      - Name: ACTIVE_POWER
+        Function Codes: "0x04"
+        Start: 12
+        Size: 2
+        Data Type: float32
+        Unit: W
+        Scale Factor: 1
+
+      - Name: POWER_FACTOR
+        Function Codes: "0x04"
+        Start: 30
+        Size: 2
+        Data Type: float32
+        Unit: "None"
+        Scale Factor: 1
+
+      - Name: FREQUENCY
+        Function Codes: "0x04"
+        Start: 46
+        Size: 2
+        Data Type: float32
+        Unit: Hz
+        Scale Factor: 1
+
+      - Name: IMPORT_ACTIVE_ENERGY
+        Function Codes: "0x04"
+        Start: 48
+        Size: 2
+        Data Type: float32
+        Unit: kWh
+        Scale Factor: 1
+
+      - Name: EXPORT_ACTIVE_ENERGY
+        Function Codes: "0x04"
+        Start: 74
+        Size: 2
+        Data Type: float32
+        Unit: kWh
+        Scale Factor: 1
+
+      - Name: TOTAL_ACTIVE_ENERGY
+        Function Codes: "0x04"
+        Start: 342
+        Size: 2
+        Data Type: float32
+        Unit: kWh
+        Scale Factor: 1

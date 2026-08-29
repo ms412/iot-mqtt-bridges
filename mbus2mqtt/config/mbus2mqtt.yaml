@@ -1,0 +1,25 @@
+
+LOGGING:
+  #LOGMODE: FILE
+  LOGMODE: CONSOLE
+  LOGFILE: mbus2mqtt.log
+  LOGSERVER: 192.168.2.20
+  LOGLEVEL: INFO
+
+BROKER:
+  BROKER: 192.168.4.31
+  PORT: 1883
+  PUBLISH: SMARTHOME/CH/IN/SENSOR01/MBUS01
+  LWT_TOPIC: SMARTHOME/CH/IN/SENSOR01/MBUS01/STATE
+
+MBUS:
+  DEVICE: /dev/ttyUSB0
+  BAUDRATE: 2400
+  UPDATE_INTERVAL: 30
+  STARTUP_DELAY: 5
+
+  # M-Bus device address(es). Each address maps to a metric label and an
+  # optional additive OFFSET applied to the primary record value.
+  16:
+    METRIC: WATER
+    OFFSET: 849.503

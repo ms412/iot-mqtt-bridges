@@ -1,0 +1,16 @@
+.env
+.idea/
+.ipynb_checkpoints/
+*.log
+*.pyc
+__pycache__/
+.pytest_cache/
+pytest_report*
+report.html
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+venv/
+.venv/

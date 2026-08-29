@@ -1,0 +1,109 @@
+ REGISTERS:
+      - Name: STROM1
+        Function Codes: "0x03"
+        Start: 1
+        Size: 2
+        Data Type: int16
+        Unit: A
+        Scale Factor: 0.01
+        "Value Range min": 0.01
+
+      - Name: STROM2
+        Function Codes: "0x03"
+        Start: 2
+        Size: 2
+        Data Type: int16
+        Unit: A
+        Scale Factor: 0.01
+        "Value Range min": 0.01
+
+      - Name: STROM3
+        Function Codes: "0x03"
+        Start: 3
+        Size: 2
+        Data Type: int16
+        Unit: A
+        Scale Factor: 0.01
+        "Value Range min": 0.01
+
+      - Name: STROM4
+        Function Codes: "0x03"
+        Start: 4
+        Size: 2
+        Data Type: int16
+        Unit: A
+        Scale Factor: 0.01
+        "Value Range min": 0.01
+
+      - Name: STROM5
+        Function Codes: "0x03"
+        Start: 5
+        Size: 2
+        Data Type: int16
+        Unit: A
+        Scale Factor: 0.01
+        "Value Range min": 0.01
+
+      - Name: STROM6
+        Function Codes: "0x03"
+        Start: 6
+        Size: 2
+        Data Type: int16
+        Unit: A
+        Scale Factor: 0.01
+        "Value Range min": 0.01
+
+      - Name: STROM7
+        Function Codes: "0x03"
+        Start: 7
+        Size: 2
+        Data Type: int16
+        Unit: A
+        Scale Factor: 0.01
+        "Value Range min": 0.01
+
+      - Name: STROM8
+        Function Codes: "0x03"
+        Start: 8
+        Size: 2
+        Data Type: int16
+        Unit: A
+        Scale Factor: 0.01
+        "Value Range min": 0.01
+
+      - Name: STROM9
+        Function Codes: "0x03"
+        Start: 12
+        Size: 2
+        Data Type: int16
+        Unit: A
+        Scale Factor: 0.01
+        "Value Range min": 0.01
+
+      - Name: STROM10
+        Function Codes: "0x03"
+        Start: 13
+        Size: 2
+        Data Type: int16
+        Unit: A
+        Scale Factor: 0.01
+        "Value Range min": 0.01
+
+      - Name: VOLTAGE
+        Function Codes: "0x03"
+        Start: 10
+        Size: 2
+        Data Type: int16
+        Unit: V
+        Scale Factor: 1
+        "Value Range min": 1
+
+      - Name: TEMPERATURE
+        Function Codes: "0x03"
+        Start: 1184
+        Size: 2
+        Data Type: int16
+        Unit: "°C"
+        Scale Factor: 1
+        "Value Range min": 1
+

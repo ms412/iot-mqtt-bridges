@@ -1,0 +1,32 @@
+
+LOGGING:
+  #LOGMODE: FILE
+  LOGMODE: CONSOLE
+  LOGFILE: so2mqtt.log
+  LOGSERVER: 192.168.2.20
+  LOGLEVEL: INFO
+
+BROKER:
+  BROKER: 192.168.2.20
+  PORT: 1883
+  PUBLISH: SMARTHOME/DE/IN/SENSOR02
+  LWT_TOPIC: SMARTHOME/DE/IN/SENSOR02/STATE
+
+S0:
+  UPDATE_INTERVAL: 15
+  STARTUP_DELAY: 5
+
+  # One entry per S0-USB adapter (serial interface). Each interface has a PORT,
+  # BAUDRATE, and one or more channels. A channel reads the field at index BYTE
+  # from the ';'-separated response, divides by FACTOR, and adds OFFSET.
+  SERIAL01:
+    PORT: /dev/ttyUSB1
+    BAUDRATE: 38400
+    GAS01:
+      OFFSET: 2158
+      BYTE: 1
+      FACTOR: 100
+    S0-2:
+      OFFSET: 10
+      BYTE: 2
+      FACTOR: 100

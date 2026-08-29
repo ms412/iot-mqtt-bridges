@@ -1,0 +1,40 @@
+
+LOGGING:
+  LOGMODE: FILE
+  #LOGMODE: CONSOLE
+  LOGFILE: modbus2mqtt.log
+  LOGSERVER: 192.168.2.20
+  LOGLEVEL: INFO
+
+BROKER:
+  BROKER: 192.168.4.31
+  PORT: 1883
+  PUBLISH: SMARTHOME/DE/IN/SENSOR01/PV01
+  LWT_TOPIC: SMARTHOME/DE/IN/SENSOR01/PV01/STATE
+
+MODBUS:
+  # Serial
+  INTERFACE: serial
+  HOST: /dev/ttyUSB0
+  BAUDRATE: 9600
+  UPDATE_INTERVAL: 10
+  STARTUP_DELAY: 5
+
+  # TCP/UDP
+  # INTERFACE: tcp
+  # HOST: 192.168.2.80
+  # PORT: 502
+
+# QDY30A Submersible Water Level Sensor
+#  1:
+#    FILE: config/devices/QDY30A.yaml
+#    QUERY:
+#      - WATER_LEVEL
+
+# Phoenix Solarcheck SCK-C-MODBUS
+  3:
+    FILE: config/devices/Solarcheck.yaml
+
+# EASTON SDM120 Single-Phase Energy Meter
+  9:
+    FILE: config/devices/SDM120.yaml

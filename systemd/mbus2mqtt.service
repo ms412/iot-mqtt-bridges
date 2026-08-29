@@ -1,0 +1,30 @@
+#Contents of /etc/systemd/system/mbus2mqtt.service
+#systemctl daemon-reload
+#systemctl enable mbus2mqtt.service
+#systemctl start mbus2mqtt.service
+
+[Unit]
+Description=mbus2mqtt bridge (M-Bus -> MQTT)
+After=network.target
+
+[Service]
+# --- Core execution setup ---
+Type=simple
+WorkingDirectory=/opt/iot-mqtt-bridges
+
+# --- Run the bridge as a module so common.* imports resolve from the repo root ---
+ExecStart=/opt/iot-mqtt-bridges/.venv/bin/python -m mbus2mqtt.main mbus2mqtt/config/mbus2mqtt.yaml
+
+# --- Restart and logging config ---
+Restart=on-failure
+RestartSec=5
+
+# Redirect stdout and stderr to syslog/journal
+StandardOutput=journal
+StandardError=journal
+
+# Environment
+Environment="PYTHONUNBUFFERED=1"
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,12 @@
+# Normalize line endings: text files use LF in the repository.
+* text=auto eol=lf
+
+# Shell scripts and hooks must keep LF so they run on Linux/macOS.
+*.sh text eol=lf
+.githooks/* text eol=lf
+
+# Treat known binary assets as binary (no EOL conversion, no diff).
+*.pdf binary
+*.xlsx binary
+*.png binary
+*.jpg binary
