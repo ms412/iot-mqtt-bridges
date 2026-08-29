@@ -192,7 +192,7 @@ def main() -> None:
     Returns:
         None.
     """
-    configfile = sys.argv[1] if len(sys.argv) == 2 else DEFAULT_CONFIG
+    configfile = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_CONFIG
     bridge = Sml2Mqtt(configfile)
     bridge.run()
 
