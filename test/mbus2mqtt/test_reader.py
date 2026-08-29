@@ -63,3 +63,36 @@ def test_read_slave_returns_none_on_error(mocker):
     reader.connect()
 
     assert reader.read_slave(16) is None
+
+
+def test_read_slave_returns_none_on_mbus_error(mocker):
+    # A transient empty/bad frame raises meterbus MBusError; it must be caught
+    # and returned as None (a skipped read), not propagated to crash the loop.
+    from meterbus.exceptions import MBusFrameDecodeError
+
+    meterbus = mocker.patch('mbus2mqtt.mbus_reader.meterbus')
+    meterbus.load.side_effect = MBusFrameDecodeError('empty frame', None)
+    meterbus.TelegramACK = type('A', (), {})
+    meterbus.TelegramLong = type('L', (), {})
+
+    mocker.patch('mbus2mqtt.mbus_reader.serial.Serial')
+    reader = MbusReader(MBUS_CFG)
+    reader.connect()
+
+    assert reader.read_slave(16) is None
+
+
+def test_read_all_skips_failed_slave(mocker):
+    # read_all must continue and simply omit a slave whose read raised.
+    from meterbus.exceptions import MBusFrameDecodeError
+
+    meterbus = mocker.patch('mbus2mqtt.mbus_reader.meterbus')
+    meterbus.load.side_effect = MBusFrameDecodeError('empty frame', None)
+    meterbus.TelegramACK = type('A', (), {})
+    meterbus.TelegramLong = type('L', (), {})
+
+    mocker.patch('mbus2mqtt.mbus_reader.serial.Serial')
+    reader = MbusReader(MBUS_CFG)
+    reader.connect()
+
+    assert reader.read_all() == {}

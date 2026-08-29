@@ -6,6 +6,7 @@ import logging
 
 import meterbus
 import serial
+from meterbus.exceptions import MBusError
 
 __APP__ = "mbus2mqtt"
 
@@ -93,7 +94,14 @@ class MbusReader:
         """
         try:
             return self._read_value(slave_id)
-        except (AssertionError, serial.SerialException, KeyError, IndexError, ValueError) as exc:
+        except (
+            AssertionError,
+            MBusError,
+            serial.SerialException,
+            KeyError,
+            IndexError,
+            ValueError,
+        ) as exc:
             self._log.error("Failed to read MBus slave id=%s: %s", slave_id, exc)
             return None
 
