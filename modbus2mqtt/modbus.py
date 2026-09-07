@@ -201,6 +201,11 @@ class Modbus:
             return data.decode_16bit_uint()
         if data_type == "uint8":
             return data.decode_8bit_uint()
+        if data_type == "int8":
+            return data.decode_8bit_int()
+        if data_type == "uint8[6]":
+            # 6-byte MAC-address-style field decoded as a raw string.
+            return data.decode_string(6)
         if data_type == "floa16":
             return data.decode_16bit_float()
         if data_type == "float32":

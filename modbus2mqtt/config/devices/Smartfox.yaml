@@ -1,0 +1,929 @@
+REGISTERS:
+  - Name: "SW-Version"
+    Function Codes: "0x03"
+    Start: 40010
+    Size: 2
+    Data Type: "uint32"
+    Unit: "None"
+    Scale Factor: 1
+
+  - Name: "Wlan-Modul_SW-Version"
+    Function Codes: "0x03"
+    Start: 40012
+    Size: 2
+    Data Type: "uint32"
+    Unit: "None"
+    Scale Factor: 1
+
+  - Name: "MAC-Adresse_LAN"
+    Function Codes: "0x03"
+    Start: 40014
+    Size: 3
+    Data Type: "uint8[6]"
+    Unit: "None"
+    Scale Factor: 1
+
+  - Name: "Modbus_Protocol_Version"
+    Function Codes: "0x03"
+    Start: 40017
+    Size: 1
+    Data Type: "uint16"
+    Unit: "None"
+    Scale Factor: 1
+
+  - Name: "MAC-Adresse_Wifi"
+    Function Codes: "0x03"
+    Start: 40018
+    Size: 3
+    Data Type: "uint8[6]"
+    Unit: "None"
+    Scale Factor: 1
+
+  - Name: "Control_via_Modbus"
+    Function Codes: "0x03"
+    Start: 40400
+    Size: 1
+    Data Type: "uint8"
+    Unit: "None"
+    Scale Factor: 1
+
+  - Name: "Control_Analogout_U"
+    Function Codes: "0x03"
+    Start: 40401
+    Size: 1
+    Data Type: "uint16"
+    Unit: "%"
+    Scale Factor: 0.1
+
+  - Name: "Control_Analogout_I"
+    Function Codes: "0x03"
+    Start: 40402
+    Size: 1
+    Data Type: "uint16"
+    Unit: "%"
+    Scale Factor: 0.1
+
+  - Name: "Control_Relay_1"
+    Function Codes: "0x03"
+    Start: 40403
+    Size: 1
+    Data Type: "uint8"
+    Unit: "None"
+    Scale Factor: 1
+
+  - Name: "Control_Relay_2"
+    Function Codes: "0x03"
+    Start: 40404
+    Size: 1
+    Data Type: "uint8"
+    Unit: "None"
+    Scale Factor: 1
+
+  - Name: "Control_Relay_3"
+    Function Codes: "0x03"
+    Start: 40405
+    Size: 1
+    Data Type: "uint8"
+    Unit: "None"
+    Scale Factor: 1
+
+  - Name: "Control_Relay_4"
+    Function Codes: "0x03"
+    Start: 40406
+    Size: 1
+    Data Type: "uint8"
+    Unit: "None"
+    Scale Factor: 1
+
+  - Name: "Energy_from_grid"
+    Function Codes: "0x03"
+    Start: 41000
+    Size: 4
+    Data Type: "uint64"
+    Unit: "Wh"
+    Scale Factor: 1
+
+  - Name: "Energy_into_grid"
+    Function Codes: "0x03"
+    Start: 41004
+    Size: 4
+    Data Type: "uint64"
+    Unit: "Wh"
+    Scale Factor: 1
+
+  - Name: "Energy_Smartfox"
+    Function Codes: "0x03"
+    Start: 41008
+    Size: 4
+    Data Type: "uint64"
+    Unit: "Wh"
+    Scale Factor: 1
+
+  - Name: "Day_Energy_from_grid"
+    Function Codes: "0x03"
+    Start: 41012
+    Size: 2
+    Data Type: "uint32"
+    Unit: "Wh"
+    Scale Factor: 1
+
+  - Name: "Day_Energy_into_grid"
+    Function Codes: "0x03"
+    Start: 41014
+    Size: 2
+    Data Type: "uint32"
+    Unit: "Wh"
+    Scale Factor: 1
+
+  - Name: "Day_Energy_Smartfox"
+    Function Codes: "0x03"
+    Start: 41016
+    Size: 2
+    Data Type: "uint32"
+    Unit: "Wh"
+    Scale Factor: 1
+
+  - Name: "Power_total"
+    Function Codes: "0x03"
+    Start: 41018
+    Size: 2
+    Data Type: "int32"
+    Unit: "W"
+    Scale Factor: 1
+
+  - Name: "Power_L1"
+    Function Codes: "0x03"
+    Start: 41020
+    Size: 2
+    Data Type: "int32"
+    Unit: "W"
+    Scale Factor: 1
+
+  - Name: "Power_L2"
+    Function Codes: "0x03"
+    Start: 41022
+    Size: 2
+    Data Type: "int32"
+    Unit: "W"
+    Scale Factor: 1
+
+  - Name: "Power_L3"
+    Function Codes: "0x03"
+    Start: 41024
+    Size: 2
+    Data Type: "int32"
+    Unit: "W"
+    Scale Factor: 1
+
+  - Name: "Voltage_L1"
+    Function Codes: "0x03"
+    Start: 41026
+    Size: 1
+    Data Type: "uint16"
+    Unit: "V"
+    Scale Factor: 0.1
+
+  - Name: "Voltage_L2"
+    Function Codes: "0x03"
+    Start: 41027
+    Size: 1
+    Data Type: "uint16"
+    Unit: "V"
+    Scale Factor: 0.1
+
+  - Name: "Voltage_L3"
+    Function Codes: "0x03"
+    Start: 41028
+    Size: 1
+    Data Type: "uint16"
+    Unit: "V"
+    Scale Factor: 0.1
+
+  - Name: "Current_L1"
+    Function Codes: "0x03"
+    Start: 41029
+    Size: 2
+    Data Type: "uint32"
+    Unit: "mA"
+    Scale Factor: 1
+
+  - Name: "Current_L2"
+    Function Codes: "0x03"
+    Start: 41031
+    Size: 2
+    Data Type: "uint32"
+    Unit: "mA"
+    Scale Factor: 1
+
+  - Name: "Current_L3"
+    Function Codes: "0x03"
+    Start: 41033
+    Size: 2
+    Data Type: "uint32"
+    Unit: "mA"
+    Scale Factor: 1
+
+  - Name: "Powerfactor_L1"
+    Function Codes: "0x03"
+    Start: 41035
+    Size: 1
+    Data Type: "int16"
+    Unit: "None"
+    Scale Factor: 0.0001
+
+  - Name: "Powerfactor_L2"
+    Function Codes: "0x03"
+    Start: 41036
+    Size: 1
+    Data Type: "int16"
+    Unit: "None"
+    Scale Factor: 0.0001
+
+  - Name: "Powerfactor_L3"
+    Function Codes: "0x03"
+    Start: 41037
+    Size: 1
+    Data Type: "int16"
+    Unit: "None"
+    Scale Factor: 0.0001
+
+  - Name: "Frequency"
+    Function Codes: "0x03"
+    Start: 41038
+    Size: 1
+    Data Type: "uint16"
+    Unit: "None"
+    Scale Factor: 0.01
+
+  - Name: "PT1000"
+    Function Codes: "0x03"
+    Start: 41039
+    Size: 1
+    Data Type: "int16"
+    Unit: "°C"
+    Scale Factor: 0.1
+
+  - Name: "S0_input"
+    Function Codes: "0x03"
+    Start: 41040
+    Size: 2
+    Data Type: "uint32"
+    Unit: "None"
+    Scale Factor: 1
+
+  - Name: "Power_Smartfox"
+    Function Codes: "0x03"
+    Start: 41042
+    Size: 2
+    Data Type: "uint32"
+    Unit: "W"
+    Scale Factor: 1
+
+  - Name: "Steuerspannung_24V"
+    Function Codes: "0x03"
+    Start: 41044
+    Size: 1
+    Data Type: "uint16"
+    Unit: "V"
+    Scale Factor: 0.01
+
+  - Name: "Wifi_rssi"
+    Function Codes: "0x03"
+    Start: 41046
+    Size: 1
+    Data Type: "int8"
+    Unit: "None"
+    Scale Factor: 1
+
+  - Name: "Aout_Output_%"
+    Function Codes: "0x03"
+    Start: 41047
+    Size: 1
+    Data Type: "uint8"
+    Unit: "%"
+    Scale Factor: 1
+
+  - Name: "SD-Card_size"
+    Function Codes: "0x03"
+    Start: 41048
+    Size: 2
+    Data Type: "uint16"
+    Unit: "None"
+    Scale Factor: 1
+
+  - Name: "frequency_converter_1_power"
+    Function Codes: "0x03"
+    Start: 41400
+    Size: 2
+    Data Type: "uint32"
+    Unit: "W"
+    Scale Factor: 1
+
+  - Name: "frequency_converter_1_energy"
+    Function Codes: "0x03"
+    Start: 41402
+    Size: 4
+    Data Type: "uint64"
+    Unit: "Wh"
+    Scale Factor: 1
+
+  - Name: "frequency_converter_2_power"
+    Function Codes: "0x03"
+    Start: 41406
+    Size: 2
+    Data Type: "uint32"
+    Unit: "W"
+    Scale Factor: 1
+
+  - Name: "frequency_converter_2_energy"
+    Function Codes: "0x03"
+    Start: 41408
+    Size: 4
+    Data Type: "uint64"
+    Unit: "Wh"
+    Scale Factor: 1
+
+  - Name: "frequency_converter_3_power"
+    Function Codes: "0x03"
+    Start: 41412
+    Size: 2
+    Data Type: "uint32"
+    Unit: "W"
+    Scale Factor: 1
+
+  - Name: "frequency_converter_3_energy"
+    Function Codes: "0x03"
+    Start: 41414
+    Size: 4
+    Data Type: "uint64"
+    Unit: "Wh"
+    Scale Factor: 1
+
+  - Name: "frequency_converter_4_power"
+    Function Codes: "0x03"
+    Start: 41418
+    Size: 2
+    Data Type: "uint32"
+    Unit: "W"
+    Scale Factor: 1
+
+  - Name: "frequency_converter_4_energy"
+    Function Codes: "0x03"
+    Start: 41420
+    Size: 4
+    Data Type: "uint64"
+    Unit: "Wh"
+    Scale Factor: 1
+
+  - Name: "frequency_converter_5_power"
+    Function Codes: "0x03"
+    Start: 41424
+    Size: 2
+    Data Type: "uint32"
+    Unit: "W"
+    Scale Factor: 1
+
+  - Name: "frequency_converter_5_energy"
+    Function Codes: "0x03"
+    Start: 41426
+    Size: 4
+    Data Type: "uint64"
+    Unit: "Wh"
+    Scale Factor: 1
+
+  - Name: "battery_1_SOC"
+    Function Codes: "0x03"
+    Start: 41430
+    Size: 1
+    Data Type: "int16"
+    Unit: "%"
+    Scale Factor: 1
+
+  - Name: "battery_1_power"
+    Function Codes: "0x03"
+    Start: 41431
+    Size: 2
+    Data Type: "uint32"
+    Unit: "W"
+    Scale Factor: 1
+
+  - Name: "battery_2_SOC"
+    Function Codes: "0x03"
+    Start: 41440
+    Size: 1
+    Data Type: "int16"
+    Unit: "%"
+    Scale Factor: 1
+
+  - Name: "battery_2_power"
+    Function Codes: "0x03"
+    Start: 41150
+    Size: 2
+    Data Type: "uint32"
+    Unit: "W"
+    Scale Factor: 1
+
+  - Name: "battery_3_SOC"
+    Function Codes: "0x03"
+    Start: 41450
+    Size: 1
+    Data Type: "int16"
+    Unit: "%"
+    Scale Factor: 1
+
+  - Name: "battery_3_power"
+    Function Codes: "0x03"
+    Start: 41451
+    Size: 2
+    Data Type: "uint32"
+    Unit: "W"
+    Scale Factor: 1
+
+  - Name: "heatpump_1_power"
+    Function Codes: "0x03"
+    Start: 41500
+    Size: 2
+    Data Type: "float32"
+    Unit: "KW"
+    Scale Factor: 1
+
+  - Name: "heatpump_1_energy"
+    Function Codes: "0x03"
+    Start: 41502
+    Size: 2
+    Data Type: "float32"
+    Unit: "KWh"
+    Scale Factor: 1
+
+  - Name: "_heatpump_1_therm.power"
+    Function Codes: "0x03"
+    Start: 41504
+    Size: 2
+    Data Type: "float32"
+    Unit: "KW"
+    Scale Factor: 1
+
+  - Name: "_heatpump_1_therm.energy"
+    Function Codes: "0x03"
+    Start: 41506
+    Size: 2
+    Data Type: "float64"
+    Unit: "KWh"
+    Scale Factor: 1
+
+  - Name: "_heatpump_1_temp._buffer_hot"
+    Function Codes: "0x03"
+    Start: 41508
+    Size: 2
+    Data Type: "float32"
+    Unit: "°C"
+    Scale Factor: 1
+
+  - Name: "_heatpump_1_temp._Buffer_cold"
+    Function Codes: "0x03"
+    Start: 41510
+    Size: 2
+    Data Type: "float32"
+    Unit: "°C"
+    Scale Factor: 1
+
+  - Name: "_heatpump_1_temp._warmwater"
+    Function Codes: "0x03"
+    Start: 41512
+    Size: 2
+    Data Type: "float32"
+    Unit: "°C"
+    Scale Factor: 1
+
+  - Name: "_heatpump_1_temp._outdoor"
+    Function Codes: "0x03"
+    Start: 41514
+    Size: 2
+    Data Type: "float32"
+    Unit: "°C"
+    Scale Factor: 1
+
+  - Name: "car_charge_1_energy_total"
+    Function Codes: "0x03"
+    Start: 41600
+    Size: 4
+    Data Type: "uint64"
+    Unit: "Wh"
+    Scale Factor: 1
+
+  - Name: "car_charge_1_energy_pres"
+    Function Codes: "0x03"
+    Start: 41604
+    Size: 2
+    Data Type: "uint32"
+    Unit: "Wh"
+    Scale Factor: 1
+
+  - Name: "car_charge_1_power"
+    Function Codes: "0x03"
+    Start: 41606
+    Size: 2
+    Data Type: "uint32"
+    Unit: "W"
+    Scale Factor: 1
+
+  - Name: "car_charge_1_charge_mode_"
+    Function Codes: "0x03"
+    Start: 41608
+    Size: 1
+    Data Type: "uint8"
+    Unit: "None"
+    Scale Factor: 1
+
+  - Name: "car_charge_1_man._charging_value"
+    Function Codes: "0x03"
+    Start: 41609
+    Size: 1
+    Data Type: "uint8"
+    Unit: "%"
+    Scale Factor: 1
+
+  - Name: "car_charge_2_energy_total"
+    Function Codes: "0x03"
+    Start: 41610
+    Size: 4
+    Data Type: "uint64"
+    Unit: "Wh"
+    Scale Factor: 1
+
+  - Name: "car_charge_2_energy_pres"
+    Function Codes: "0x03"
+    Start: 41614
+    Size: 2
+    Data Type: "uint32"
+    Unit: "Wh"
+    Scale Factor: 1
+
+  - Name: "car_charge_2_power"
+    Function Codes: "0x03"
+    Start: 41616
+    Size: 2
+    Data Type: "uint32"
+    Unit: "W"
+    Scale Factor: 1
+
+  - Name: "car_charge_2_charge_mode_"
+    Function Codes: "0x03"
+    Start: 41618
+    Size: 1
+    Data Type: "uint8"
+    Unit: "None"
+    Scale Factor: 1
+
+  - Name: "car_charge_2_man._charging_value"
+    Function Codes: "0x03"
+    Start: 41619
+    Size: 1
+    Data Type: "uint8"
+    Unit: "%"
+    Scale Factor: 1
+
+  - Name: "car_charge_3_energy_total"
+    Function Codes: "0x03"
+    Start: 41620
+    Size: 4
+    Data Type: "uint64"
+    Unit: "Wh"
+    Scale Factor: 1
+
+  - Name: "car_charge_3_energy_pres"
+    Function Codes: "0x03"
+    Start: 41624
+    Size: 2
+    Data Type: "uint32"
+    Unit: "Wh"
+    Scale Factor: 1
+
+  - Name: "car_charge_3_power"
+    Function Codes: "0x03"
+    Start: 41626
+    Size: 2
+    Data Type: "uint32"
+    Unit: "W"
+    Scale Factor: 1
+
+  - Name: "car_charge_3_charge_mode_"
+    Function Codes: "0x03"
+    Start: 41628
+    Size: 1
+    Data Type: "uint8"
+    Unit: "None"
+    Scale Factor: 1
+
+  - Name: "car_charge_3_man._charging_value"
+    Function Codes: "0x03"
+    Start: 41629
+    Size: 1
+    Data Type: "uint8"
+    Unit: "%"
+    Scale Factor: 1
+
+  - Name: "car_charge_4_energy_total"
+    Function Codes: "0x03"
+    Start: 41630
+    Size: 4
+    Data Type: "uint64"
+    Unit: "Wh"
+    Scale Factor: 1
+
+  - Name: "car_charge_4_energy_pres"
+    Function Codes: "0x03"
+    Start: 41634
+    Size: 2
+    Data Type: "uint32"
+    Unit: "Wh"
+    Scale Factor: 1
+
+  - Name: "car_charge_4_power"
+    Function Codes: "0x03"
+    Start: 41636
+    Size: 2
+    Data Type: "uint32"
+    Unit: "W"
+    Scale Factor: 1
+
+  - Name: "car_charge_4_charge_mode_"
+    Function Codes: "0x03"
+    Start: 41638
+    Size: 1
+    Data Type: "uint8"
+    Unit: "None"
+    Scale Factor: 1
+
+  - Name: "car_charge_4_man._charging_value"
+    Function Codes: "0x03"
+    Start: 41639
+    Size: 1
+    Data Type: "uint8"
+    Unit: "%"
+    Scale Factor: 1
+
+  - Name: "car_charge_5_energy_total"
+    Function Codes: "0x03"
+    Start: 41640
+    Size: 4
+    Data Type: "uint64"
+    Unit: "Wh"
+    Scale Factor: 1
+
+  - Name: "car_charge_5_energy_pres"
+    Function Codes: "0x03"
+    Start: 41644
+    Size: 2
+    Data Type: "uint32"
+    Unit: "Wh"
+    Scale Factor: 1
+
+  - Name: "car_charge_5_power"
+    Function Codes: "0x03"
+    Start: 41646
+    Size: 2
+    Data Type: "uint32"
+    Unit: "W"
+    Scale Factor: 1
+
+  - Name: "car_charge_5_charge_mode_"
+    Function Codes: "0x03"
+    Start: 41648
+    Size: 1
+    Data Type: "uint8"
+    Unit: "None"
+    Scale Factor: 1
+
+  - Name: "car_charge_5_man._charging_value"
+    Function Codes: "0x03"
+    Start: 41649
+    Size: 1
+    Data Type: "uint8"
+    Unit: "%"
+    Scale Factor: 1
+
+  - Name: "ext._Meter_S0_counter_1"
+    Function Codes: "0x03"
+    Start: 41700
+    Size: 2
+    Data Type: "uint32"
+    Unit: "None"
+    Scale Factor: 1
+
+  - Name: "ext._Meter_S0_counter_2"
+    Function Codes: "0x03"
+    Start: 41702
+    Size: 2
+    Data Type: "uint32"
+    Unit: "None"
+    Scale Factor: 1
+
+  - Name: "ext._Meter_S0_counter_3"
+    Function Codes: "0x03"
+    Start: 41704
+    Size: 2
+    Data Type: "uint32"
+    Unit: "None"
+    Scale Factor: 1
+
+  - Name: "ext._Meter_S0_counter_4"
+    Function Codes: "0x03"
+    Start: 41706
+    Size: 2
+    Data Type: "uint32"
+    Unit: "None"
+    Scale Factor: 1
+
+  - Name: "ext._Meter_S0_counter_5"
+    Function Codes: "0x03"
+    Start: 41708
+    Size: 2
+    Data Type: "uint32"
+    Unit: "None"
+    Scale Factor: 1
+
+  - Name: "ext.Meter_1_power"
+    Function Codes: "0x03"
+    Start: 41710
+    Size: 2
+    Data Type: "int32"
+    Unit: "W"
+    Scale Factor: 1
+
+  - Name: "ext.Meter_1_energy_for"
+    Function Codes: "0x03"
+    Start: 41712
+    Size: 4
+    Data Type: "uint64"
+    Unit: "Wh"
+    Scale Factor: 1
+
+  - Name: "ext.Meter_2_power"
+    Function Codes: "0x03"
+    Start: 41716
+    Size: 2
+    Data Type: "int32"
+    Unit: "W"
+    Scale Factor: 1
+
+  - Name: "ext.Meter_2_energy_for"
+    Function Codes: "0x03"
+    Start: 41718
+    Size: 4
+    Data Type: "uint64"
+    Unit: "Wh"
+    Scale Factor: 1
+
+  - Name: "ext.Meter_3_power"
+    Function Codes: "0x03"
+    Start: 41722
+    Size: 2
+    Data Type: "int32"
+    Unit: "W"
+    Scale Factor: 1
+
+  - Name: "ext.Meter_3_energy_for"
+    Function Codes: "0x03"
+    Start: 41724
+    Size: 4
+    Data Type: "uint64"
+    Unit: "Wh"
+    Scale Factor: 1
+
+  - Name: "ext.Meter_4_power"
+    Function Codes: "0x03"
+    Start: 41728
+    Size: 2
+    Data Type: "int32"
+    Unit: "W"
+    Scale Factor: 1
+
+  - Name: "ext.Meter_4_energy_for"
+    Function Codes: "0x03"
+    Start: 41730
+    Size: 4
+    Data Type: "uint64"
+    Unit: "Wh"
+    Scale Factor: 1
+
+  - Name: "ext.Meter_5_power"
+    Function Codes: "0x03"
+    Start: 41734
+    Size: 2
+    Data Type: "int32"
+    Unit: "W"
+    Scale Factor: 1
+
+  - Name: "ext.Meter_5_energy_for"
+    Function Codes: "0x03"
+    Start: 41736
+    Size: 4
+    Data Type: "uint64"
+    Unit: "Wh"
+    Scale Factor: 1
+
+  - Name: "ext.Meter_1_energy_rev"
+    Function Codes: "0x03"
+    Start: 41740
+    Size: 4
+    Data Type: "uint64"
+    Unit: "Wh"
+    Scale Factor: 1
+
+  - Name: "ext.Meter_2_energy_rev"
+    Function Codes: "0x03"
+    Start: 41744
+    Size: 4
+    Data Type: "uint64"
+    Unit: "Wh"
+    Scale Factor: 1
+
+  - Name: "ext.Meter_3_energy_rev"
+    Function Codes: "0x03"
+    Start: 41748
+    Size: 4
+    Data Type: "int32"
+    Unit: "W"
+    Scale Factor: 1
+
+  - Name: "ext.Meter_4_energy_rev"
+    Function Codes: "0x03"
+    Start: 41752
+    Size: 4
+    Data Type: "uint64"
+    Unit: "Wh"
+    Scale Factor: 1
+
+  - Name: "ext.Meter_5_energy_rev"
+    Function Codes: "0x03"
+    Start: 41756
+    Size: 4
+    Data Type: "uint64"
+    Unit: "Wh"
+    Scale Factor: 1
+
+  - Name: "Aout_Mode"
+    Function Codes: "0x03"
+    Start: 42207
+    Size: 1
+    Data Type: "uint8"
+    Unit: "None"
+    Scale Factor: 1
+
+  - Name: "Aout_Output_man."
+    Function Codes: "0x03"
+    Start: 42208
+    Size: 1
+    Data Type: "uint8"
+    Unit: "%"
+    Scale Factor: 1
+
+  - Name: "relay_1_mode"
+    Function Codes: "0x03"
+    Start: 42250
+    Size: 1
+    Data Type: "uint8"
+    Unit: "None"
+    Scale Factor: 1
+
+  - Name: "relay_2_mode"
+    Function Codes: "0x03"
+    Start: 42280
+    Size: 1
+    Data Type: "uint8"
+    Unit: "None"
+    Scale Factor: 1
+
+  - Name: "relay_3_mode"
+    Function Codes: "0x03"
+    Start: 42310
+    Size: 1
+    Data Type: "uint8"
+    Unit: "None"
+    Scale Factor: 1
+
+  - Name: "relay_4_mode"
+    Function Codes: "0x03"
+    Start: 42340
+    Size: 1
+    Data Type: "uint8"
+    Unit: "None"
+    Scale Factor: 1
+
+  - Name: "Verbrauchsregler_Mode"
+    Function Codes: "0x03"
+    Start: 42561
+    Size: 1
+    Data Type: "uint8"
+    Unit: "None"
+    Scale Factor: 1
+
+  - Name: "Verbrauchsregler_Output_man."
+    Function Codes: "0x03"
+    Start: 42562
+    Size: 1
+    Data Type: "uint8"
+    Unit: "%"
+    Scale Factor: 1
+
