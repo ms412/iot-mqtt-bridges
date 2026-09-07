@@ -4,23 +4,27 @@
 
 ```
 iot-mqtt-bridges/
-├── src/
-│   ├── main.py            # REAL entry point (systemd runs this). Defines Modbus2mqtt.
-│   └── __init__.py
 ├── common/                # Shared library
 │   ├── mqtt/
-│   │   └── mqtt_client.py # `mqttclient` — Paho MQTT wrapper (connect/publish/subscribe/LWT)
-│   └── logging/
-│       └── logger.py      # `logger` — dictConfig-based logger factory
+│   │   └── mqtt_client.py # `MqttClient` — Paho MQTT wrapper (connect/publish/subscribe/LWT)
+│   ├── logging/
+│   │   └── app_logger.py  # `AppLogger` — dictConfig-based logger factory
+│   └── config/
+│       └── base_config.py # `BaseConfig` — YAML loader + device-file resolution
 ├── modbus2mqtt/
+│   ├── main.py            # entry point: Modbus2Mqtt coordinator + main()
 │   ├── modbus.py          # `Modbus` — pymodbus wrapper (read + decode registers)
-│   ├── main.py            # EMPTY (do not assume this is the entry point)
+│   ├── modbus_reader.py   # `ModbusReader` — one Modbus client per slave
+│   ├── modbus_mapper.py   # pure functions: scale/clamp + topic/payload
 │   └── config/
 │       ├── modbus2mqtt_photovoltaic.yaml   # main config example
 │       ├── modbus2mqtt_waterlevel.yaml     # main config example
 │       ├── devices/       # per-device register definitions (SDM120, QDY30A, Solarcheck)
 │       └── data/          # reference material (PDF, Register.xlsx)
-├── systemd/modbus2mqtt.service
+├── mbus2mqtt/ · sml2mqtt/ · so2mqtt/ · sungrow2mqtt/   # the other four bridges
+├── systemd/               # one unit per bridge
+├── docker/                # optional per-bridge Dockerfiles
+├── test/                  # pytest suites mirroring the source layout
 ├── requirements.txt
 ├── AGENTS.md              # aspirational architecture / conventions
 └── .github/copilot-instructions.md
@@ -28,24 +32,28 @@ iot-mqtt-bridges/
 
 ## Important Reality Checks
 
-- **Entry point is `src/main.py`**, not `modbus2mqtt/main.py` (which is empty). The
-  systemd unit and CLI (`python src/main.py <config.yaml>`) both use `src/main.py`.
-- The `Modbus2mqtt` application class lives in `src/main.py`, imports `Modbus` from
-  `modbus2mqtt.modbus` and `mqttclient`/`logger` from `common`.
-- Package `__init__` files are currently misnamed as `__init.py__` /  `__init.py___`
-  in `common/` and `modbus2mqtt/`. Only `src/__init__.py` is correctly named. Imports
-  work because scripts run from the project root.
+- **Entry point is `modbus2mqtt/main.py`**, run as a module: `python -m
+  modbus2mqtt.main <config.yaml>`. The legacy `src/main.py` monolith has been removed;
+  its logic now lives in `modbus2mqtt/main.py` + `modbus_reader.py` + `modbus_mapper.py`.
+- The `Modbus2Mqtt` coordinator class lives in `modbus2mqtt/main.py` and imports
+  `Modbus` from `modbus2mqtt.modbus`, plus `MqttClient` / `AppLogger` / `BaseConfig`
+  from `common`.
+- Scripts are run from the project root so `common.*` and the bridge packages resolve.
 
 ## Module Responsibilities
 
-- `src/main.py` — orchestration: load YAML, resolve device-definition files, start
-  logger + MQTT + Modbus clients, poll loop, scale/clamp values, publish JSON.
+- `modbus2mqtt/main.py` — orchestration: load YAML, start logging + MQTT + Modbus,
+  poll loop, publish JSON.
+- `modbus2mqtt/modbus_reader.py` — builds one `Modbus` client per slave and reads
+  registers.
+- `modbus2mqtt/modbus_mapper.py` — pure functions: scale, clamp, and build topic/payload.
 - `modbus2mqtt/modbus.py` — all Modbus I/O and decoding. Function codes `0x03`
   (holding) and `0x04` (input) are implemented; data-type decoding via
   `BinaryPayloadDecoder`.
 - `common/mqtt/mqtt_client.py` — the only place Paho MQTT is used. Owns loop,
   reconnect, retained LWT, JSON encode/decode, topic callbacks.
 - `common/logging/app_logger.py` — `AppLogger` setup for CONSOLE / SYSLOG / FILE modes.
+- `common/config/base_config.py` — `BaseConfig` YAML loader + device-file resolution.
 
 ## Config Model
 

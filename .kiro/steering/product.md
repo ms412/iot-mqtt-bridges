@@ -72,6 +72,7 @@ connection settings live under the `SUNGROW` section (`HOST` / `PORT` / `TLS` /
 
 ## Deployment
 
-modbus2mqtt runs as a Linux `systemd` service (`systemd/modbus2mqtt.service`) from
-`/opt/modbus2mqtt`, launching `src/main.py` inside a `.venv`. A comparable unit for
-mbus2mqtt does not exist yet.
+Each bridge runs as a Linux `systemd` service (one unit per bridge in `systemd/`)
+from `/opt/iot-mqtt-bridges`, launching `python -m <bridge>.main <config>` inside a
+shared `.venv`. An optional Docker setup (`docker/` + `docker-compose.yml`) is also
+provided.
