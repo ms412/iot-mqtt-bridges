@@ -1,0 +1,26 @@
+
+LOGGING:
+  #LOGMODE: FILE
+  LOGMODE: CONSOLE
+  LOGFILE: sungrow2mqtt.log
+  LOGSERVER: 192.168.2.20
+  LOGLEVEL: INFO
+
+BROKER:
+  BROKER: 192.168.4.31
+  PORT: 1883
+  PUBLISH: SMARTHOME/CH/BE/SUNGROW
+  LWT_TOPIC: SMARTHOME/CH/BE/SUNGROW/STATUS
+
+SUNGROW:
+  HOST: 192.168.2.81
+  PORT: 443
+  TLS: true
+  USERNAME: user
+  # Password should be provided via the SUNGROW_PASSWORD environment variable
+  # rather than committed here. An inline value is only a local-testing fallback.
+  PASSWORD: ${SUNGROW_PASSWORD}
+  LANG: en_us
+  TIMEOUT: 30
+  UPDATE_INTERVAL: 10
+  STARTUP_DELAY: 5

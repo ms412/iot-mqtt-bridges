@@ -1,0 +1,65 @@
+# Optional container setup for the bridges.
+#
+# Usage (from the repository root):
+#   cp .env.example .env      # then edit secrets
+#   docker compose up -d modbus2mqtt        # start a single bridge
+#   docker compose up -d                     # start all bridges
+#
+# Config files are bind-mounted read-only so they can be edited on the host
+# without rebuilding the image. Secrets come from the .env file, never baked in.
+# The serial bridges map a host serial device; adjust the device path to match
+# your hardware (or remove the mapping when running against networked meters).
+
+services:
+  modbus2mqtt:
+    build:
+      context: .
+      dockerfile: docker/modbus2mqtt.Dockerfile
+    image: iot-mqtt-bridges/modbus2mqtt
+    restart: unless-stopped
+    volumes:
+      - ./modbus2mqtt/config:/app/modbus2mqtt/config:ro
+
+  mbus2mqtt:
+    build:
+      context: .
+      dockerfile: docker/mbus2mqtt.Dockerfile
+    image: iot-mqtt-bridges/mbus2mqtt
+    restart: unless-stopped
+    volumes:
+      - ./mbus2mqtt/config:/app/mbus2mqtt/config:ro
+    devices:
+      - "/dev/ttyUSB0:/dev/ttyUSB0"
+
+  sml2mqtt:
+    build:
+      context: .
+      dockerfile: docker/sml2mqtt.Dockerfile
+    image: iot-mqtt-bridges/sml2mqtt
+    restart: unless-stopped
+    volumes:
+      - ./sml2mqtt/config:/app/sml2mqtt/config:ro
+    devices:
+      - "/dev/ttyUSB0:/dev/ttyUSB0"
+
+  so2mqtt:
+    build:
+      context: .
+      dockerfile: docker/so2mqtt.Dockerfile
+    image: iot-mqtt-bridges/so2mqtt
+    restart: unless-stopped
+    volumes:
+      - ./so2mqtt/config:/app/so2mqtt/config:ro
+    devices:
+      - "/dev/ttyUSB1:/dev/ttyUSB1"
+
+  sungrow2mqtt:
+    build:
+      context: .
+      dockerfile: docker/sungrow2mqtt.Dockerfile
+    image: iot-mqtt-bridges/sungrow2mqtt
+    restart: unless-stopped
+    volumes:
+      - ./sungrow2mqtt/config:/app/sungrow2mqtt/config:ro
+    environment:
+      - SUNGROW_PASSWORD=${SUNGROW_PASSWORD}

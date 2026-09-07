@@ -12,8 +12,9 @@ and building automation systems.
 | `mbus2mqtt`   | M-Bus (Meter-Bus) meters over serial     | `pyMeterBus`  |
 | `sml2mqtt`    | SML (Smart Message Language) smart meters | `smllib`      |
 | `so2mqtt`     | S0 pulse counters via a serial S0-USB adapter | `pyserial` |
+| `sungrow2mqtt` | Sungrow inverter (WiNet-S) over WebSocket | `websocket-client` |
 
-All four are configuration-driven polling services that share the same
+All five are configuration-driven polling services that share the same
 `common/` library (MQTT client, logger, and config loader).
 
 ## Repository Layout
@@ -28,7 +29,10 @@ iot-mqtt-bridges/
 ├── mbus2mqtt/             # M-Bus bridge (main.py, mbus_reader.py, mbus_mapper.py)
 ├── sml2mqtt/              # SML bridge (main.py, sml_reader.py, sml_mapper.py, sml_obis.py)
 ├── so2mqtt/               # S0 bridge (main.py, so_reader.py, so_mapper.py)
+├── sungrow2mqtt/          # Sungrow bridge (main.py, sungrow_reader.py, sungrow_mapper.py)
 ├── systemd/               # One systemd unit per bridge
+├── docker/                # Optional per-bridge Dockerfiles
+├── docker-compose.yml     # Optional container setup for all bridges
 ├── test/                  # pytest suites mirroring the source layout
 ├── requirements.txt
 ├── AGENTS.md              # conventions for AI coding agents
@@ -67,9 +71,13 @@ BROKER:
   LWT_TOPIC: SMARTHOME/DE/IN/SENSOR01/PV01/STATE
 ```
 
-A protocol-specific section follows (`MODBUS`, `MBUS`, `SML`, or `S0`) holding
-transport settings (`DEVICE`/`HOST`, `BAUDRATE`, `UPDATE_INTERVAL`,
+A protocol-specific section follows (`MODBUS`, `MBUS`, `SML`, `S0`, or `SUNGROW`)
+holding transport settings (`DEVICE`/`HOST`, `BAUDRATE`, `UPDATE_INTERVAL`,
 `STARTUP_DELAY`) plus per-device or per-channel entries.
+
+Config values may reference an environment variable with `${VAR}` (e.g. the
+Sungrow inverter password is set as `PASSWORD: ${SUNGROW_PASSWORD}`); the value
+is read from the environment at startup.
 
 Credentials and secrets are supplied via environment variables, not committed to
 config files.
@@ -80,6 +88,7 @@ config files.
 - `mbus2mqtt`: `<PUBLISH>/<slaveId>` → `{METRIC: value}`
 - `sml2mqtt`: `<PUBLISH>` (single topic) → `{obis_short: {data_value, data_unit, data_type}}`
 - `so2mqtt`: `<PUBLISH>/<interface>/<channel>` → `{S0, S0_raw}` (retained)
+- `sungrow2mqtt`: `<PUBLISH>/<dev_id>` → `{<measurement>: value | {value, unit}, ...}`
 
 Every published payload also carries a top-level `timestamp` field (Unix epoch
 seconds) recording when the message was built.
@@ -105,10 +114,13 @@ python -m modbus2mqtt.main modbus2mqtt/config/modbus2mqtt_photovoltaic.yaml
 python -m mbus2mqtt.main   mbus2mqtt/config/mbus2mqtt.yaml
 python -m sml2mqtt.main    sml2mqtt/config/sml2mqtt.yaml
 python -m so2mqtt.main     so2mqtt/config/so2mqtt.yaml
+python -m sungrow2mqtt.main sungrow2mqtt/config/sungrow2mqtt.yaml
 ```
 
 Serial-based bridges (`mbus2mqtt`, `sml2mqtt`, `so2mqtt`) need access to the
 serial device (on Linux, add the service user to the `dialout` group).
+`sungrow2mqtt` needs the inverter password in the `SUNGROW_PASSWORD` environment
+variable.
 
 ## Deployment (systemd)
 
@@ -120,6 +132,25 @@ sudo cp systemd/modbus2mqtt.service /etc/systemd/system/
 sudo systemctl daemon-reload
 sudo systemctl enable --now modbus2mqtt.service
 ```
+
+## Deployment (Docker, optional)
+
+Docker is an optional alternative to running the bridges directly or via
+systemd; nothing in the Python code depends on it. Each bridge has a Dockerfile
+in `docker/` and a service in `docker-compose.yml`.
+
+```bash
+cp .env.example .env      # then fill in secrets (e.g. SUNGROW_PASSWORD)
+docker compose up -d modbus2mqtt   # start one bridge
+docker compose up -d               # start all bridges
+docker compose down                # stop
+```
+
+Config files are bind-mounted read-only, so edits on the host take effect on
+restart without rebuilding. Secrets come from `.env` (gitignored) and are never
+baked into the images. The serial bridges map a host serial device
+(`/dev/ttyUSB*`) in `docker-compose.yml` — adjust the path to match your
+hardware, or drop the mapping for networked meters.
 
 ## Testing
 

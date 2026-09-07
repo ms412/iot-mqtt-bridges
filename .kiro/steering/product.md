@@ -8,7 +8,7 @@ broker for consumption by home/building automation systems.
 
 ## Current State
 
-Four bridges are implemented today, all configuration-driven polling services:
+Five bridges are implemented today, all configuration-driven polling services:
 
 **modbus2mqtt**
 1. Reads holding/input registers from Modbus devices (RTU over serial, or TCP/UDP/TLS).
@@ -35,10 +35,17 @@ Four bridges are implemented today, all configuration-driven polling services:
 3. Publishes per-channel readings as retained JSON (`{S0, S0_raw}`) to an MQTT broker.
 4. Shares the same `common/` MQTT, logging, and config layer as the other bridges.
 
-All four target bridges from `AGENTS.md` now exist. The shared `common` abstractions
-described there (`BaseBridge`, `MqttConfig`, `AppLogger`) still do **not** exist;
-`BaseConfig` does exist in `common/config/`. Treat `AGENTS.md` as the target
-architecture and this steering as the description of what is actually in the repo.
+**sungrow2mqtt** (adapted from github.com/ms412/sungrow2mqtt)
+1. Connects to a Sungrow inverter's WiNet-S dongle over a WebSocket and authenticates.
+2. Lists devices and fetches each device's real-time and direct measurement lists.
+3. Publishes per-device readings as JSON (flattened `{measurement: value}`) to MQTT.
+4. Shares the same `common/` MQTT, logging, and config layer as the other bridges.
+
+All four `AGENTS.md` target bridges plus `sungrow2mqtt` now exist, along with the
+optional `docker/` setup. `BaseConfig` and `AppLogger` exist in `common/`; the
+`BaseBridge` / `MqttConfig` abstractions described in `AGENTS.md` still do **not**.
+Treat `AGENTS.md` as the target architecture and this steering as the description of
+what is actually in the repo.
 
 ## Supported Devices
 
@@ -58,6 +65,10 @@ sml2mqtt: any SML smart meter on the serial interface; OBIS values are decoded v
 
 so2mqtt: S0 pulse-counter channels behind a serial S0-USB adapter; each interface and
 its channels are configured under the `S0` section with `BYTE` / `FACTOR` / `OFFSET`.
+
+sungrow2mqtt: a Sungrow inverter reachable over the LAN via its WiNet-S WebSocket;
+connection settings live under the `SUNGROW` section (`HOST` / `PORT` / `TLS` /
+`USERNAME` / `PASSWORD` / `LANG`). The password is supplied via `${SUNGROW_PASSWORD}`.
 
 ## Deployment
 

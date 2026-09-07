@@ -70,7 +70,10 @@ Main config YAML uses UPPERCASE top-level keys: `LOGGING`, `BROKER`, `MODBUS`.
   OBIS short code: `{obis_short: {data_value, data_unit, data_type}}`.
 - so2mqtt payload topic: `<BROKER.PUBLISH>/<interface>/<channel>` (retained) with a JSON
   body of `{S0, S0_raw}`.
+- sungrow2mqtt payload topic: `<BROKER.PUBLISH>/<dev_id>` with a flattened JSON body of
+  `{measurement: value | {value, unit}, ...}`.
 - Status: `BROKER.LWT_TOPIC` carries retained `ONLINE` / `OFFLINE`.
+- All bridges add a top-level `timestamp` (Unix epoch seconds) to every payload.
 
 ## mbus2mqtt Package
 
@@ -148,3 +151,41 @@ so2mqtt/
   line) and the mapper derives each channel's value from the chosen field.
 - NOTE: the upstream repo used `configobj` (nested INI `.config`); here it is converted
   to the project's YAML `BaseConfig`.
+
+## sungrow2mqtt Package
+
+Adapted from github.com/ms412/sungrow2mqtt, following the same shape as the other
+bridges and reusing `common/` (`MqttClient`, `AppLogger`, `BaseConfig`). Depends on
+`websocket-client`.
+
+```
+sungrow2mqtt/
+├── __init__.py
+├── main.py             # Sungrow2Mqtt coordinator class + thin main()
+├── sungrow_reader.py   # SungrowReader — WiNet-S WebSocket (connect/auth/devicelist/real/direct/ping)
+├── sungrow_mapper.py   # flatten_measurements / process_device / build_payload / map_to_topics
+└── config/
+    └── sungrow2mqtt.yaml
+```
+
+- Config uses UPPERCASE keys `LOGGING`, `BROKER`, `SUNGROW`. The `SUNGROW` section holds
+  `HOST` / `PORT` / `TLS` / `USERNAME` / `PASSWORD` / `LANG` / `TIMEOUT` plus
+  `UPDATE_INTERVAL` / `STARTUP_DELAY`. `PASSWORD` uses `${SUNGROW_PASSWORD}`, resolved
+  from the environment in `main.py` (`BaseConfig` does not expand env vars).
+- `Sungrow2Mqtt` mirrors the other bridges: `load_config`, `start_logging`,
+  `start_mqtt`, `connect_source`, `read_data`, `map_to_topics`, `publish_data`,
+  `run` / `stop`. The run loop uses `SungrowReader.ping()` for keepalive and reconnects
+  on failure.
+- The reader connects over `wss://<host>:<port>/ws/home/overview` with TLS verification
+  disabled (self-signed WiNet-S certificate; LAN-only), authenticates (connect + login),
+  then lists devices and attaches each device's `real` and `direct` measurement lists.
+- NOTE: the upstream repo used `.env` + pydantic-settings; here it is converted to the
+  project's YAML `BaseConfig` with `${VAR}` env references for secrets.
+
+## Docker (optional)
+
+Optional container deployment; nothing in the Python code depends on it. Per-bridge
+Dockerfiles live in `docker/<bridge>.Dockerfile` (base `python:3.12-slim`) and
+`docker-compose.yml` defines all five services with `restart: unless-stopped`. Config is
+bind-mounted read-only, secrets come from a gitignored `.env` (see `.env.example`), and
+serial bridges map a host `/dev/ttyUSB*` device.

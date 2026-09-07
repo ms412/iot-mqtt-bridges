@@ -42,19 +42,20 @@ that, never open:
 This is a **Python monorepo** containing multiple protocol-to-MQTT bridge services
 and a shared common library.
 
-Target layout (partly aspirational). All four bridges (`modbus2mqtt/`, `mbus2mqtt/`,
-`sml2mqtt/`, `so2mqtt/`) and `common/` exist today; `docker/` and `pyproject.toml` are
-not yet created.
+Target layout (partly aspirational). The five bridges (`modbus2mqtt/`, `mbus2mqtt/`,
+`sml2mqtt/`, `so2mqtt/`, `sungrow2mqtt/`), `common/`, and the `docker/` setup exist
+today; `pyproject.toml` is not yet created.
 
 ```
 iot-mqtt-bridges/
- common/              # Shared library: mqttclient, logger, BaseConfig
+ common/              # Shared library: MqttClient, AppLogger, BaseConfig
  modbus2mqtt/         # Modbus TCP/RTU → MQTT bridge (implemented)
  mbus2mqtt/           # M-Bus (heat/water meters) → MQTT bridge (implemented)
  sml2mqtt/            # SML (smart meter language) → MQTT bridge (implemented)
  so2mqtt/             # S0 pulse counter → MQTT bridge (implemented)
- docker/              # Per-service Dockerfiles (planned)
- docker-compose.yml   # (planned)
+ sungrow2mqtt/        # Sungrow inverter (WebSocket) → MQTT bridge (implemented)
+ docker/              # Per-service Dockerfiles (implemented, optional)
+ docker-compose.yml   # (implemented, optional)
  pyproject.toml       # (planned)
 ```
 
@@ -236,6 +237,7 @@ Passwords are not in the configuration file; they should be provided via environ
 | `pymodbus`      | Modbus TCP/RTU protocol          | 3.6         |
 | `pyMeterBus`    | M-Bus protocol (imported as `meterbus`) | 0.8.4 |
 | `smllib`        | SML (smart meter) parsing        | 1.2         |
+| `websocket-client` | Sungrow inverter WebSocket (imported as `websocket`) | 1.8 |
 | `pytest`        | Testing framework                | 8.0         |
 | `pytest-mock`   | Mocking in tests                 | 3.12        |
 | `ruff`          | Linting and formatting           | 0.4         |
